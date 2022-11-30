@@ -9,6 +9,8 @@ class SiteController extends AbstractController
     {
         // $this->render('inicio/inicio');
         $this->checkLogin();
+
+        $this->render('site/inicio');
     }
 
     

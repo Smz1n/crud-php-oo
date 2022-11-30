@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Aluno;
+use App\Notification\WebNotification;
 use App\Repository\AlunoRepository;
 use App\Security\UserSecurity;
 use Dompdf\Dompdf;
@@ -57,7 +58,7 @@ class AlunoController extends AbstractController
 
             die('Vish, aconteceu um erro');
         }
-
+        WebNotification::add('Novo aluno cadastrado', 'success');
         $this->redirect('/alunos/listar');
     }
 
@@ -88,6 +89,7 @@ class AlunoController extends AbstractController
     
                 die('Vish, aconteceu um erro');
             }
+            WebNotification::add('Aluno atualizado', 'success');
             $this->redirect('/alunos/listar');
         }
     }

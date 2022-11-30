@@ -47,26 +47,28 @@ class CursoController extends AbstractController
         $curso->categoria_id = intval($_POST['categoria']);
 
         $this->repository->inserir($curso);
-        // try {
-        // } catch (Exception $exception) {
-        //     var_dump($exception->getMessage());
-        //     // if (true === str_contains($exception->getMessage(), 'cpf')) {
-        //     //     die('CPF ja existe');
-        //     // }
+        try {
+        } catch (Exception $exception) {
+            ($exception->getMessage());
+            if (true === str_contains($exception->getMessage(), 'nome')) {
+                die('nome do curso já existe');
+            }
 
-        //     // if (true === str_contains($exception->getMessage(), 'email')) {
-        //     //     die('Email ja existe');
-        //     // }
+            if (true === str_contains($exception->getMessage(), 'email')) {
+                die('Email ja existe');
+            }
 
-        //     die('Vish, aconteceu um erro');
-        // }
+            die('Vish, Fez merda né?');
+        }
 
         $this->redirect('/cursos/listar');
     }
 
     public function excluir(): void
     {
-        echo "Pagina de excluir";
+        $id = $_GET['id'];
+        $this->repository->excluir($id);
+        $this->redirect('/cursos/listar');
     }
 
     public function editar(): void
@@ -89,4 +91,6 @@ class CursoController extends AbstractController
             $this->redirect('/cursos/listar');
         }
     }
+ 
+    
 }
