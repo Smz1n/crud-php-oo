@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Model\User;
 use App\Repository\UserRepository;
+use Exception;
 
 class UserController extends AbstractController
 {
@@ -41,8 +42,20 @@ class UserController extends AbstractController
         $user->password = $password;
         $user->profile = $_POST['profile'];
 
-        $this->repository->insert($user);
-
+        try{
+            $this->repository->insert($user);
+        } catch(Exception $exception) {
+            if(true === str_contains($exception->getMessage(), 'email')){
+                die('Email já existe');
+            }
+        }
+     $this->redirect('/usuarios/listar');
+    }
+    
+    public function excluir(): void
+    {
+        $id = $_GET['id'];
+        $this->repository->excluir($id);
         $this->redirect('/usuarios/listar');
     }
 }
